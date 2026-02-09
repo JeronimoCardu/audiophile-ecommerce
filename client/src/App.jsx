@@ -1,16 +1,24 @@
-import EMoneyField from "./components/Inputs/EMoneyField";
-import NameField from "./components/Inputs/NameField";
-import QuantityField from "./components/Inputs/QuantityField";
+import { Routes, Route } from "react-router-dom";
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+import Home from "./pages/Home";
+
 export default function App() {
   return (
     <>
-      <h1 className="text-red-500">Hola</h1>
-      <form action="">
-        <NameField />
-        <EMoneyField>E-money</EMoneyField>
-        <EMoneyField>Cash on Delivery</EMoneyField>
-        <QuantityField />
-      </form>
+      <Header />
+      <main className=''>
+        <Routes>
+          <Route path="*" element={<Home />} />
+          <Route path="/category/:categoryName" element={<Home />} />
+          <Route path="/product/:productId" element={<Home />} />
+          <Route path="/cart" element={<Home />} />
+          <Route path="/checkout" element={<Home />} />
+        </Routes>
+      </main>
+      <Footer />
     </>
   );
 }
