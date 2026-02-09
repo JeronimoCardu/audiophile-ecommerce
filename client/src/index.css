@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+body,
+html,
+#root {
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1ft auto;
+  max-height: 100dvh;
+}
+
+/* FONTS */
+@font-face {
+  font-family: manropeBold;
+  src: url(../public/fonts/Manrope-Bold.ttf);
+}
+@font-face {
+  font-family: manropeRegular;
+  src: url(../public/fonts/Manrope-Regular.ttf);
+}
+@font-face {
+  font-family: manropeMedium;
+  src: url(../public/fonts/Manrope-Medium.ttf);
+}
+
+/* VARIABLES */
+@theme {
+  --color-bg-white: #fafafa;
+  --color-bg-footer: #101010;
+  --color-text-white: #ffffff;
+  --color-bg-black: #000000;
+  --color-gray: #f1f1f1;
+  --color-orange: #d87d4a;
+  --color-orange-hover: #fbaf85;
+}
+
+h1 {
+  font-family: manropeBold;
+  font-size: 3.4375rem;
+  line-height: 3.625rem;
+  letter-spacing: 2px;
+}
+h2 {
+  font-family: manropeBold;
+  font-size: 2.5rem;
+  line-height: 2.75rem;
+  letter-spacing: 1.5px;
+}
+h3 {
+  font-family: manropeBold;
+  font-size: 2rem;
+  line-height: 2.25rem;
+  letter-spacing: 1.15px;
+}
+h4 {
+  font-family: manropeBold;
+  font-size: 1.75rem;
+  line-height: 2.375rem;
+  letter-spacing: 2px;
+}
+h5 {
+  font-family: manropeBold;
+  font-size: 1.5rem;
+  line-height: 2.0625rem;
+  letter-spacing: 1.7px;
+}
+h6 {
+  font-family: manropeBold;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  letter-spacing: 1.3px;
+}
+.overline {
+  font-family: manropeRegular;
+  font-size: 0.875rem;
+  line-height: 1.1875rem;
+  letter-spacing: 10px;
+}
+.subtitle {
+  font-family: manropeBold;
+  font-size: 0.8125rem;
+  line-height: 1.5625rem;
+  letter-spacing: 1px;
+}
+body {
+  font-family: manropeMedium;
+  font-size: 0.9375rem;
+  line-height: 1.5625rem;
+}
