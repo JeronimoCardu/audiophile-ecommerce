@@ -9,12 +9,13 @@ html,
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body {
   display: grid;
-  grid-template-rows: auto 1ft auto;
-  max-height: 100dvh;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
 }
 
 /* FONTS */
@@ -33,10 +34,10 @@ body {
 
 /* VARIABLES */
 @theme {
-  --color-bg-white: #fafafa;
-  --color-bg-footer: #101010;
-  --color-text-white: #ffffff;
-  --color-bg-black: #000000;
+  --color-bgWhite: #fafafa;
+  --color-bgBlackFooter: #101010;
+  --color-textWhite: #ffffff;
+  --color-bgBlack: #000000;
   --color-gray: #f1f1f1;
   --color-orange: #d87d4a;
   --color-orange-hover: #fbaf85;
@@ -78,7 +79,7 @@ h6 {
   line-height: 1.5rem;
   letter-spacing: 1.3px;
 }
-.overline {
+.overlineClass {
   font-family: manropeRegular;
   font-size: 0.875rem;
   line-height: 1.1875rem;
@@ -94,4 +95,8 @@ body {
   font-family: manropeMedium;
   font-size: 0.9375rem;
   line-height: 1.5625rem;
+}
+
+.defaultWidth {
+  width: 90%;
 }
