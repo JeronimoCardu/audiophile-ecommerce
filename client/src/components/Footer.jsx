@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-bgBlackFooter relative space-y-12 p-8 pt-12 text-center">
       <div className="bg-orange absolute top-0 left-1/2 h-1 w-2/6 -translate-x-1/2"></div>
       <img
-        src="assets/shared/desktop/logo.svg"
+        src="/assets/shared/desktop/logo.svg"
         className="mx-auto"
         alt="audiophile logo"
       />
@@ -26,12 +26,12 @@ export default function Footer() {
       </p>
       <section className="flex items-center justify-center gap-4">
         <img
-          src="assets/shared/desktop/icon-facebook.svg"
+          src="/assets/shared/desktop/icon-facebook.svg"
           alt="facebook icon"
         />
-        <img src="assets/shared/desktop/icon-twitter.svg" alt="twitter icon" />
+        <img src="/assets/shared/desktop/icon-twitter.svg" alt="twitter icon" />
         <img
-          src="assets/shared/desktop/icon-instagram.svg"
+          src="/assets/shared/desktop/icon-instagram.svg"
           alt="instagram icon"
         />
       </section>
