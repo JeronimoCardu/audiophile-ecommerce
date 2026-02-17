@@ -14,7 +14,7 @@ export default function ProductsSales() {
   );
   return (
     <section id="productsOffer" className="defaultWidth mx-auto mb-12">
-      <Link to={`/${productsOffer[0]?._id}`}>
+      <Link to={`product/${productsOffer[0]?._id}`}>
         <article className="bg-orange relative -z-10 rounded-lg pt-12 pb-10 text-center">
           <img
             className="absolute top-0 scale-170"
@@ -39,13 +39,13 @@ export default function ProductsSales() {
           </div>
         </article>
       </Link>
-      <Link to={`/${productsOffer[1]?._id}`}>
+      <Link to={`product/${productsOffer[1]?._id}`}>
         <article className="my-8 rounded-lg bg-[url(assets/home/mobile/image-speaker-zx7.jpg)] bg-cover px-4 py-25">
           <h3 className="mb-6">ZX7 SPEAKER</h3>
           <BtnSecondary />
         </article>
       </Link>
-      <Link to={`/${productsOffer[2]?._id}`}>
+      <Link to={`product/${productsOffer[2]?._id}`}>
         <article className="space-y-8">
           <img
             className="rounded-lg"
