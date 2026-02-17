@@ -5,13 +5,13 @@ export default function ProductCard({ product }) {
     <article className="defaultWidth mx-auto flex flex-col items-center gap-6 rounded-lg text-center text-black">
       <img
         className="rounded-lg"
-        src={`${product.image.mobile.replace(".", "")}`}
+        src={`${product.image.mobile}`}
         alt={product.name}
       />
       {product?.new && <p className="overlineClass text-orange">NEW PRODUCT</p>}
       <h3>{product?.name.toUpperCase()}</h3>
       <p className="opacity-50">{product?.description}</p>
-      <BtnPrimary />
+      <BtnPrimary productId={product._id}/>
     </article>
   );
 }

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Categories from "../components/Categories.jsx";
 import Information from "../components/Information.jsx";
 
+
 export default function CategoryPage({ products }) {
   const { categoryName } = useParams();
   const productsInCategory = products.filter(
