@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function QuantityField({ children }) {
+export default function QuantityField() {
   const [quantity, setQuantity] = useState(1);
   return (
     <>
-      <div className="border-gray bg-gray flex w-fit items-center gap-2 border p-3.5 text-lg">
+      <div className="border-gray bg-gray flex w-full items-center gap-2 border p-3.5 text-lg">
         <button
           type="button"
           className="hover:text-orange h-full w-10 cursor-pointer text-gray-300"

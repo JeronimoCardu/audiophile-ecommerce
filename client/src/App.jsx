@@ -1,32 +1,20 @@
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import CategoryPage from "./pages/CategoryPage";
+import ProductDetail from './pages/ProductDetail';
 
-const API_URL = import.meta.env.VITE_API_URL;
+import { productContext } from "./contexts/productContext";
 
 export default function App() {
-  const [products, setProducts] = useState([]);
+  const { getAllProductsFromAPI, products } = useContext(productContext);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`${API_URL}/api/products`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        const data = await response.json();
-        setProducts(data.data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
+    getAllProductsFromAPI();
   }, []);
 
   return (
@@ -40,7 +28,7 @@ export default function App() {
             path="/category/:categoryName"
             element={<CategoryPage products={products} />}
           />
-          <Route path="/product/:productId" element={<Home />} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/cart" element={<Home />} />
           <Route path="/checkout" element={<Home />} />
         </Routes>
