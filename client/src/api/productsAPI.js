@@ -5,6 +5,7 @@ export async function getAllProducts() {
     const response = await fetch(`${API_URL}/api/products`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -22,6 +23,7 @@ export async function getProductById(productId) {
     const response = await fetch(`${API_URL}/api/products/${productId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
