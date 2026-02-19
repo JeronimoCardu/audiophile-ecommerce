@@ -10,5 +10,7 @@ router.post("/add", cartController.addToCart);
 router.put("/update", cartController.updateCartItem);
 // Remove item from cart
 router.delete("/remove", cartController.removeFromCart);
+// Remove all items from cart
+router.delete("/clear", cartController.clearCart);
 
 module.exports = router;

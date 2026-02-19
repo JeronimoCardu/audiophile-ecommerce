@@ -2,8 +2,8 @@ const Cart = require("../models/Cart.js");
 
 exports.getCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.cookie.user }).populate(
-      "items.product",
+    const cart = await Cart.findOne({ user: req.cookies.user }).populate(
+      "products",
     );
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
@@ -18,18 +18,18 @@ exports.getCart = async (req, res) => {
 
 exports.addToCart = async (req, res) => {
   try {
-    const { productId, quantity = 1, price } = req.body;
+    const { product, quantity = 1, price } = req.body;
     let cart = await Cart.findOne({ user: req.cookies.user });
     if (!cart) {
       cart = new Cart({ user: req.cookies.user, products: [] });
     }
     const existingProductIndex = cart.products.findIndex(
-      (item) => item.productId.toString() === productId,
+      (item) => item.product.id === product.id,
     );
     if (existingProductIndex !== -1) {
       cart.products[existingProductIndex].quantity += quantity;
     } else {
-      cart.products.push({ productId, price, quantity });
+      cart.products.push({ product, price, quantity });
     }
     await cart.save();
     res
@@ -42,13 +42,13 @@ exports.addToCart = async (req, res) => {
 
 exports.updateCartItem = async (req, res) => {
   try {
-    const { productId, quantity = 1 } = req.body;
+    const { product, quantity = 1 } = req.body;
     const cart = await Cart.findOne({ user: req.cookies.user });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
     const productIndex = cart.products.findIndex(
-      (item) => item.productId.toString() === productId,
+      (item) => item.product.id === product.id,
     );
     if (productIndex === -1) {
       return res.status(404).json({ message: "Product not found in cart" });
@@ -63,13 +63,13 @@ exports.updateCartItem = async (req, res) => {
 
 exports.removeFromCart = async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { product } = req.body;
     const cart = await Cart.findOne({ user: req.cookies.user });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
     const productIndex = cart.products.findIndex(
-      (item) => item.productId.toString() === productId,
+      (item) => item.product._id.toString() === product._id.toString(),
     );
     if (productIndex === -1) {
       return res.status(404).json({ message: "Product not found in cart" });
@@ -77,6 +77,20 @@ exports.removeFromCart = async (req, res) => {
     cart.products.splice(productIndex, 1);
     await cart.save();
     res.json({ message: "Item removed from cart successfully", data: cart });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.clearCart = async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ user: req.cookies.user });
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+    cart.products = [];
+    await cart.save();
+    res.json({ message: "All items removed from cart successfully", data: cart });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
