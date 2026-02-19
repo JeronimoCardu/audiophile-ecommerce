@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 
+import { useContext } from "react";
+import { productContext } from "../contexts/productContext";
+
 export default function Footer() {
+  const { cartPopupOpen } = useContext(productContext);
   return (
-    <footer className="bg-bgBlackFooter relative space-y-12 p-8 pt-12 text-center">
+    <footer className={`${cartPopupOpen ? "opacity-70" : ""} bg-bgBlackFooter relative space-y-12 p-8 pt-12 text-center`}>
       <div className="bg-orange absolute top-0 left-1/2 h-1 w-2/6 -translate-x-1/2"></div>
       <img
         src="/assets/shared/desktop/logo.svg"
