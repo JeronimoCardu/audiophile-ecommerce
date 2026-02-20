@@ -38,7 +38,7 @@ const ProductProvider = ({ children }) => {
   const toggleCartPopup = () => {
     setCartPopupOpen((prev) => !prev);
   };
- 
+
   const getCartFromAPI = async () => {
     try {
       const cart = await getCart();
@@ -49,9 +49,15 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const addToCartToAPI = async (productId, quantity, price) => {
+  const addToCartToAPI = async (productId, quantity, image, name, price) => {
     try {
-      const updatedCart = await addToCart(productId, quantity, price);
+      const updatedCart = await addToCart(
+        productId,
+        quantity,
+        image,
+        name,
+        price,
+      );
       setCart(updatedCart);
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -59,9 +65,9 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const updateCartToAPI = async (product, quantity) => {
+  const updateCartToAPI = async (productId, quantity) => {
     try {
-      const updatedCart = await updateCart(product, quantity);
+      const updatedCart = await updateCart(productId, quantity);
       setCart(updatedCart);
     } catch (error) {
       console.error("Error updating cart:", error);
@@ -69,9 +75,9 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  const removeProductOfTheCartFromAPI = async (product) => {
+  const removeProductOfTheCartFromAPI = async (productId) => {
     try {
-      const updatedCart = await removeFromCart(product);
+      const updatedCart = await removeFromCart(productId);
       setCart(updatedCart);
     } catch (error) {
       console.error("Error removing from cart:", error);

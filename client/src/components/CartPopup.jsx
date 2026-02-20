@@ -54,55 +54,69 @@ export default function CartPopup() {
     >
       <div className="flex justify-between">
         <h5>CART ({cart ? cart.products.length : 0})</h5>
-        <button
-          className="underline opacity-50"
-          onClick={() => clearCartFromAPI()}
-        >
-          Remove all
-        </button>
-      </div>
-      <ul>
-        {cart.products.map((item) => (
-          <li
-            key={item.product._id}
-            className="grid grid-cols-[64px_1fr_auto] items-center gap-4 py-4"
+        {cart && cart.products.length > 0 && (
+          <button
+            className="underline opacity-50"
+            onClick={() => clearCartFromAPI()}
           >
-            <img
-              className="h-16 w-16 rounded-lg object-cover"
-              src={item.product.image?.mobile}
-              alt={item.product.name}
-            />
-
-            <div className="flex min-w-0 flex-col justify-center">
-              <p className="text-sm font-bold wrap-break-word">
-                {item.product.name.split(" ")[0]}
-              </p>
-              <p className="text-sm text-gray-500">
-                ${(item.product.price * item.quantity).toLocaleString("en-EN")}
-              </p>
-            </div>
-
-            <div className="flex items-center justify-end">
-              <QuantityField item={item} />
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="my-4 flex items-center justify-between text-lg">
-        <p className="opacity-50">TOTAL</p>
-        <p className="font-bold">
-          $
-          {cart.products
-            .reduce(
-              (total, item) => total + item.product.price * item.quantity,
-              0,
-            )
-            .toLocaleString("en-EN")}
-        </p>
+            Remove all
+          </button>
+        )}
       </div>
-      <Link to="/checkout" onClick={toggleCartPopup}>
-        <button className="bg-orange w-full py-3 text-white">CHECKOUT</button>
-      </Link>
+
+      {cart && cart.products.length > 0 ? (
+        <>
+          <ul>
+            {cart.products.map((product) => (
+              <li
+                key={product._id}
+                className="grid grid-cols-[64px_1fr_auto] items-center gap-4 py-4"
+              >
+                <img
+                  className="h-16 w-16 rounded-lg object-cover"
+                  src={product?.image}
+                  alt={product.name}
+                />
+
+                <div className="flex min-w-0 flex-col justify-center">
+                  <p className="text-sm font-bold wrap-break-word">
+                    {product.name.split(" ")[0]}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    $
+                    {(product.price * product.quantity).toLocaleString("en-EN")}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-end">
+                  <QuantityField product={product} cart={cart} />
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="my-4 flex items-center justify-between text-lg">
+            <p className="opacity-50">TOTAL</p>
+            <p className="font-bold">
+              $
+              {cart.products
+                .reduce(
+                  (total, product) => total + product.price * product.quantity,
+                  0,
+                )
+                .toLocaleString("en-EN")}
+            </p>
+          </div>
+          <Link to="/checkout" onClick={toggleCartPopup}>
+            <button className="bg-orange w-full py-3 text-white">
+              CHECKOUT
+            </button>
+          </Link>
+        </>
+      ) : (
+        <p className="my-4 text-center text-sm text-gray-500">
+          Your cart is empty.
+        </p>
+      )}
     </div>
   );
 }

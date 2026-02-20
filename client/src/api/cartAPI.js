@@ -7,9 +7,6 @@ export async function getCart() {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     const data = await response.json();
     return data.data;
   } catch (error) {
@@ -18,13 +15,13 @@ export async function getCart() {
   }
 }
 
-export async function addToCart(productId, quantity, price) {
+export async function addToCart(productId, quantity, image, name, price) {
   try {
     const response = await fetch(`${API_URL}/api/cart/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ productId, quantity, price }),
+      body: JSON.stringify({ productId, quantity, image, name, price }),
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,31 +34,32 @@ export async function addToCart(productId, quantity, price) {
   }
 }
 
-export async function updateCart(product, quantity) {
+export async function updateCart(productId, quantity) {
   try {
     const response = await fetch(`${API_URL}/api/cart/update`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ product, quantity }),
-    }); 
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ productId, quantity }),
+    });
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     return data.data;
-  } catch (error) {    console.error("Error updating cart:", error);
+  } catch (error) {
+    console.error("Error updating cart:", error);
     throw error;
-  } 
+  }
 }
 
-export async function removeFromCart(product) {
+export async function removeFromCart(productId) {
   try {
     const response = await fetch(`${API_URL}/api/cart/remove`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ product }),
+      body: JSON.stringify({ productId }),
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

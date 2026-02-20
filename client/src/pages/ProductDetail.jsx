@@ -10,9 +10,19 @@ import Information from "../components/Information.jsx";
 export default function ProductDetail() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { getProductByIdFromAPI } = useContext(productContext);
+  const { getProductByIdFromAPI, addToCartToAPI } = useContext(productContext);
 
   const [productData, setProductData] = useState(null);
+
+  async function handleAddToCart() {
+    await addToCartToAPI(
+      productData._id,
+      Number(document.getElementById(`quantity-${productData._id}`).value),
+      productData.image.mobile,
+      productData.name,
+      productData.price,
+    );
+  }
 
   useEffect(() => {
     async function fetchProductById() {
@@ -21,6 +31,7 @@ export default function ProductDetail() {
     }
     fetchProductById();
   }, [productId]);
+
   return (
     <section className="defaultWidth mx-auto">
       <article className="my-6 space-y-6">
@@ -39,8 +50,11 @@ export default function ProductDetail() {
         <p className="opacity-50">{productData?.description}</p>
         <p className="subtitle text-lg!">${productData?.price}</p>
         <div className="grid w-fit grid-cols-[40%_60%] gap-6">
-          <QuantityField />
-          <button className="bg-orange w-fit px-8 text-white">
+          <QuantityField product={{ ...productData, quantity: 1 }} />
+          <button
+            onClick={handleAddToCart}
+            className="bg-orange w-fit px-8 text-white"
+          >
             ADD TO CART
           </button>
         </div>
