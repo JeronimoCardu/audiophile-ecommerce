@@ -8,12 +8,14 @@ import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import CategoryPage from "./pages/CategoryPage";
 import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
 
 import { productContext } from "./contexts/productContext";
 
 export default function App() {
-  const { getAllProductsFromAPI, products, cartPopupOpen } =
+  const { getAllProductsFromAPI, products, cart, cartPopupOpen } =
     useContext(productContext);
+
   useEffect(() => {
     getAllProductsFromAPI();
   }, []);
@@ -32,8 +34,7 @@ export default function App() {
             element={<CategoryPage products={products} />}
           />
           <Route path="/product/:productId" element={<ProductDetail />} />
-          <Route path="/cart" element={<Home />} />
-          <Route path="/checkout" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>
       <Footer />
