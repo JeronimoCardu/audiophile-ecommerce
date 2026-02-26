@@ -3,12 +3,15 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 
-import ProductProvider  from "./contexts/ProductProvider.jsx";
+import ProductProvider from "./contexts/ProductProvider.jsx";
+import FormProvider from "./contexts/FormProvider";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ProductProvider>
-      <App />
-    </ProductProvider>
+    <FormProvider>
+      <ProductProvider>
+        <App />
+      </ProductProvider>
+    </FormProvider>
   </BrowserRouter>,
 );
