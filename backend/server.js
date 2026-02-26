@@ -6,22 +6,21 @@ const PORT = process.env.PORT || 5000;
 // CORS middleware
 const cors = require("cors");
 app.use(
-  cors(
-    {
+  cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-  }
-),
+  }),
 );
 
 // Cookies
-const cookieParser = require("cookie-parser");
-const cookieMiddleware = require('./middlewares/cookies.js');
+const cookieParser = require("cookie-parser"); // Leer y procesar cookies desde las requests HTTP
+const cookieMiddleware = require("./middlewares/cookies.js"); //
+
+// El COOKIE_SECRET se usa para firmar y verificar cookies firmadas, evitando que sean manipuladas
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(cookieMiddleware);
-
 
 // Body parser middleware
 app.use(express.json());
@@ -40,8 +39,6 @@ const orderRoutes = require("./routes/order.routes.js");
 app.use("/api/products", productsRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
-
-
 
 // Listen on port
 app.listen(PORT, () => {

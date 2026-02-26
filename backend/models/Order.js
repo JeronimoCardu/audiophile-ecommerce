@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-    
+
 const cartSchema = new mongoose.Schema(
   {
     cart: {
@@ -51,7 +51,7 @@ const cartSchema = new mongoose.Schema(
           return this.paymentInfo.method === "e-money";
         },
       },
-      eMoneyPin: {
+      eMoneyPIN: {
         type: String,
         required: function () {
           return this.paymentInfo.method === "e-money";
