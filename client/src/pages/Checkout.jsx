@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { productContext } from "../contexts/productContext";
@@ -6,14 +6,19 @@ import { formContext } from "../contexts/formContext";
 
 import PaymentField from "../components/Inputs/PaymentField";
 import FormField from "../components/Inputs/FormField";
+import CheckoutModal from "../components/CheckoutModal";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const { handleSubmit, register, watch } = useForm();
 
   const { handleOrder } = useContext(formContext);
-  const { cart } = useContext(productContext);
+  const { cart, clearCartFromAPI } = useContext(productContext);
   const paymentMethod = watch("paymentMethod");
+
+  const [orderedProducts, setOrderedProducts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [grandTotalOrder, setGrandTotalOrder] = useState(0);
 
   const totalBuy = cart?.products.reduce(
     (total, product) => total + product.price * product.quantity,
@@ -25,18 +30,28 @@ export default function Checkout() {
 
   return (
     <>
+      <CheckoutModal
+        isOpen={isModalOpen}
+        products={orderedProducts}
+        grandTotal={grandTotalOrder}
+      />
       <button onClick={() => navigate(-1)} className="px-6 py-3 opacity-50">
         Go Back
       </button>
       <form
-        onSubmit={handleSubmit((data) => {
+        onSubmit={handleSubmit(async (data) => {
           const parsedData = { ...data };
 
           if (paymentMethod !== "e-money") {
             delete parsedData.eMoneyNumber;
             delete parsedData.eMoneyPIN;
           }
-          handleOrder(cart._id, parsedData, grandTotal);
+          await handleOrder(cart._id, parsedData, grandTotal);
+          setOrderedProducts(cart.products);
+          setGrandTotalOrder(grandTotal);
+          setIsModalOpen(true);
+
+          await clearCartFromAPI();
         })}
       >
         <section className="mx-auto flex w-18/20 flex-col rounded-lg p-8 shadow-[0px_0px_40px_rgba(0,0,0,0.15)]">
@@ -134,6 +149,20 @@ export default function Checkout() {
             text="e-Money PIN"
             placeholder="Insert your e-Money PIN"
           />
+          {paymentMethod === "cash-on-delivery" && (
+            <div id="cash-on-delivery-info " className="mt-6 flex items-center gap-6 rounded-lg bg-gray px-6 py-6">
+              <img
+                src="/assets/checkout/icon-cash-on-delivery.svg"
+                alt="Cash on Delivery"
+              />
+              <p className="opacity-50">
+                The ‘Cash on Delivery’ option enables you to pay in cash when
+                our delivery courier arrives at your residence. Just make sure
+                your address is correct so that your order will not be
+                cancelled.
+              </p>
+            </div>
+          )}
         </section>
         <section className="mx-auto mt-8 mb-20 flex w-18/20 flex-col rounded-lg p-8 shadow-[0px_0px_40px_rgba(0,0,0,0.15)]">
           <h3>SUMMARY</h3>

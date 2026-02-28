@@ -7,11 +7,11 @@ import ProductProvider from "./contexts/ProductProvider.jsx";
 import FormProvider from "./contexts/FormProvider";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <FormProvider>
-      <ProductProvider>
-        <App />
-      </ProductProvider>
-    </FormProvider>
-  </BrowserRouter>,
+    <BrowserRouter>
+      <FormProvider>
+        <ProductProvider>
+          <App />
+        </ProductProvider>
+      </FormProvider>
+    </BrowserRouter>
 );
