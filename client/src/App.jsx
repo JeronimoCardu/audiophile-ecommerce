@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -13,8 +13,9 @@ import Checkout from "./pages/Checkout";
 import { productContext } from "./contexts/productContext";
 
 export default function App() {
-  const { getAllProductsFromAPI, products, cart, cartPopupOpen } =
+  const { getAllProductsFromAPI, products, cartPopupOpen } =
     useContext(productContext);
+  const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
     getAllProductsFromAPI();
@@ -22,9 +23,9 @@ export default function App() {
 
   return (
     <>
-      <Header />
+      <Header menuOpen={openMenu} setOpenMenu={setOpenMenu} />
       <main
-        className={`${cartPopupOpen ? "opacity-70" : ""} min-h-screen w-full`}
+        className={`${openMenu ? "opacity-50 " : ""} ${cartPopupOpen ? "opacity-70" : ""} min-h-screen w-full`}
       >
         <ScrollToTop />
         <Routes>
