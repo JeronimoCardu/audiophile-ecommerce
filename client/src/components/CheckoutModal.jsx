@@ -12,15 +12,15 @@ export default function CheckoutModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-6">
-      <article className="w-full max-w-135 rounded-lg bg-white p-8 md:p-12">
+      <article className="w-full max-w-135 tablet:max-w-170 rounded-lg bg-white p-8 md:p-12">
         <img
           src="/assets/checkout/icon-order-confirmation.svg"
           alt="Order confirmed"
-          className="h-16 w-16"
+          className="h-16 w-16 tablet:h-22 tablet:w-22"
         />
 
-        <h4 className="mt-6 uppercase">THANK YOU FOR YOUR ORDER</h4>
-        <p className="mt-4 text-[15px] opacity-50">
+        <h4 className="mt-6 uppercase tablet:text-5xl!">THANK YOU FOR YOUR ORDER</h4>
+        <p className="mt-4 text-[15px] opacity-50 tablet:text-xl!">
           You will receive an email confirmation shortly.
         </p>
 
@@ -28,11 +28,11 @@ export default function CheckoutModal({
           <div className="bg-gray px-6 py-6">
             {firstProduct ? (
               <>
-                <div className="flex items-center gap-4">
+                <div className="flex tablet:text-lg! items-center gap-4">
                   <img
                     src={firstProduct.image}
                     alt={firstProduct.name}
-                    className="h-12 w-12 rounded-lg object-cover"
+                    className="h-12 w-12 rounded-lg object-cover  tablet:h-22 tablet:w-22"
                   />
 
                   <div className="min-w-0">
@@ -52,7 +52,7 @@ export default function CheckoutModal({
                 {otherItemsCount > 0 && (
                   <>
                     <hr className="my-3 border-black/8" />
-                    <p className="text-center font-[manropeBold] text-xs opacity-50">
+                    <p className="text-center font-[manropeBold] text-xs opacity-50 tablet:text-lg!">
                       and {otherItemsCount} other item(s)
                     </p>
                   </>
@@ -63,7 +63,7 @@ export default function CheckoutModal({
             )}
           </div>
 
-          <div className="bg-black px-6 py-4 md:py-10">
+          <div className="bg-black px-6 py-4 md:py-10 tablet:text-lg!">
             <p className="text-textWhite/50">GRAND TOTAL</p>
             <p className="mt-2 font-[manropeBold] text-2xl text-white">
               ${grandTotal.toLocaleString("en-EN")}
@@ -72,7 +72,7 @@ export default function CheckoutModal({
         </div>
 
         <Link to="/" className="mt-6 block">
-          <button className="bg-orange hover:bg-orange-hover w-full cursor-pointer py-4 font-[manropeBold] tracking-widest text-white transition-colors">
+          <button className="bg-orange hover:bg-orange-hover w-full cursor-pointer py-4 font-[manropeBold] tracking-widest text-white transition-colors tablet:text-lg!">
             BACK TO HOME
           </button>
         </Link>

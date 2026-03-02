@@ -25,7 +25,7 @@ export default function App() {
     <>
       <Header menuOpen={openMenu} setOpenMenu={setOpenMenu} />
       <main
-        className={`${openMenu ? "opacity-50 " : ""} ${cartPopupOpen ? "opacity-70" : ""} min-h-screen w-full`}
+        className={`${openMenu ? "opacity-50 " : ""} ${cartPopupOpen ? "opacity-70" : ""} w-full flex-1`}
       >
         <ScrollToTop />
         <Routes>

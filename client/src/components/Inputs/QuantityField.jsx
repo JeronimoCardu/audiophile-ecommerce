@@ -30,11 +30,11 @@ export default function QuantityField({ product, cart = null }) {
   }
 
   return (
-    <div className="bg-gray border-gray products-center grid w-full max-w-30 grid-cols-3 rounded-lg border">
+    <div className="bg-gray border-gray products-center grid w-full max-w-30 tablet:max-w-50 tablet:text-2xl grid-cols-3 rounded-lg border">
       {/* minus */}
       <button
         type="button"
-        className="hover:text-orange products-center flex h-full w-full justify-center py-2 font-semibold text-gray-400 transition-colors"
+        className="hover:text-orange products-center flex h-full w-full items-center justify-center py-2 font-semibold text-gray-400 transition-colors cursor-pointer"
         onClick={() => handleSetQuantity("decrease")}
       >
         −
@@ -47,13 +47,13 @@ export default function QuantityField({ product, cart = null }) {
         min={1}
         value={quantity}
         onChange={(e) => setQuantity(Number(e.target.value))}
-        className="w-full [appearance:textfield] bg-transparent text-center text-sm font-semibold outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        className="w-full [appearance:textfield] items-center bg-transparent text-center text-sm tablet:text-2xl font-semibold outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       />
 
       {/* plus */}
       <button
         type="button"
-        className="hover:text-orange products-center flex h-full w-full justify-center py-2 font-semibold text-gray-400 transition-colors"
+        className="hover:text-orange products-center flex h-full w-full items-center justify-center py-2 font-semibold text-gray-400 transition-colors cursor-pointer"
         onClick={() => handleSetQuantity("increase")}
       >
         +

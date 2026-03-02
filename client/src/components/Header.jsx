@@ -8,13 +8,22 @@ export default function Header({ menuOpen, setOpenMenu }) {
   const location = useLocation().pathname;
   const { toggleCartPopup, cartPopupOpen } = useContext(productContext);
 
-  const cartRef = useRef(null);
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const cartButtonRef = useRef(null);
 
   useEffect(() => {
     if (!menuOpen) return;
 
     const handleOutsideInteraction = (event) => {
-      if (cartRef.current && !cartRef.current.contains(event.target)) {
+      if (
+        menuButtonRef.current &&
+        menuButtonRef.current.contains(event.target)
+      ) {
+        return;
+      }
+
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpenMenu(false);
       }
     };
@@ -27,30 +36,61 @@ export default function Header({ menuOpen, setOpenMenu }) {
   }, [menuOpen]);
 
   return (
-    <div className="relative z-50 w-full">
+    <div className="desktop:bg-[#1A1A1A] relative z-50 w-full">
       <header
-        className={`${location === "/" ? " border-b border-gray-600 bg-[#1A1A1A] " : "bg-black"} ${cartPopupOpen ? "opacity-70" : ""} top-0 flex w-full items-center justify-between p-6`}
+        className={`${location === "/" ? " border-b border-gray-600 bg-[#1A1A1A] " : "bg-black"} ${cartPopupOpen ? "opacity-70" : ""} desktop:defaultWidth top-0 mx-auto`}
       >
-        <img
-          src="/assets/shared/tablet/icon-hamburger.svg"
-          alt="menu"
-          onClick={() => {
-            setOpenMenu(!menuOpen);
-          }}
-        />
-        <Link to="/">
-          <img src="/assets/shared/desktop/logo.svg" alt="logo" />
-        </Link>
-        <button onClick={toggleCartPopup}>
-          <img src="/assets/shared/desktop/icon-cart.svg" alt="cart" />
-        </button>
+        <div className="defaultWidth tablet:py-8 mx-auto flex items-center justify-between py-6">
+          <button
+            ref={menuButtonRef}
+            className="tablet:w-8 desktop:hidden cursor-pointer"
+            onClick={() => {
+              setOpenMenu(!menuOpen);
+            }}
+          >
+            <img
+              ref={menuButtonRef}
+              src="/assets/shared/tablet/icon-hamburger.svg"
+              alt="menu"
+              className="tablet:w-8 desktop:hidden cursor-pointer"
+            />
+          </button>
+          <Link to="/">
+            <img src="/assets/shared/desktop/logo.svg" alt="logo" />
+          </Link>
+          <nav className="desktop:flex hidden items-center gap-8 text-sm tracking-widest text-white">
+            <Link to="/" className="hover:text-orange">
+              HOME
+            </Link>
+            <Link to="/category/headphones" className="hover:text-orange">
+              HEADPHONES
+            </Link>
+            <Link to="/category/speakers" className="hover:text-orange">
+              SPEAKERS
+            </Link>
+            <Link to="/category/earphones" className="hover:text-orange">
+              EARPHONES
+            </Link>
+          </nav>
+          <button
+            ref={cartButtonRef}
+            onClick={toggleCartPopup}
+            className="cursor-pointer"
+          >
+            <img
+              src="/assets/shared/desktop/icon-cart.svg"
+              className="tablet:scale-150"
+              alt="cart"
+            />
+          </button>
+        </div>
       </header>
-      <CartPopup />
+      <CartPopup triggerRef={cartButtonRef} />
 
       {menuOpen && (
-        <div ref={cartRef} className="absolute w-full">
-          <ul className="items-center justify-center gap-12 bg-white text-center">
-            <li className="hover:bg-gray py-4">
+        <div ref={menuRef} className="desktop:hidden absolute w-full">
+          <ul className="tablet:text-2xl items-center justify-center gap-12 bg-white text-center">
+            <li className="hover:bg-gray tablet:py-8 py-4">
               <Link
                 onClick={() => setOpenMenu(false)}
                 to="/category/headphones"
@@ -58,12 +98,12 @@ export default function Header({ menuOpen, setOpenMenu }) {
                 HEADPHONES
               </Link>
             </li>
-            <li className="hover:bg-gray py-4">
+            <li className="hover:bg-gray tablet:py-8 py-4">
               <Link onClick={() => setOpenMenu(false)} to="/category/speakers">
                 SPEAKERS
               </Link>
             </li>
-            <li className="hover:bg-gray py-4">
+            <li className="hover:bg-gray tablet:py-8 py-4">
               <Link onClick={() => setOpenMenu(false)} to="/category/earphones">
                 EARPHONES
               </Link>

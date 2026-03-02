@@ -10,7 +10,12 @@ import CheckoutModal from "../components/CheckoutModal";
 
 export default function Checkout() {
   const navigate = useNavigate();
-  const { handleSubmit, register, watch } = useForm();
+  const {
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const { handleOrder } = useContext(formContext);
   const { cart, clearCartFromAPI } = useContext(productContext);
@@ -35,10 +40,14 @@ export default function Checkout() {
         products={orderedProducts}
         grandTotal={grandTotalOrder}
       />
-      <button onClick={() => navigate(-1)} className="px-6 py-3 opacity-50">
+      <button
+        onClick={() => navigate(-1)}
+        className="defaultWidth tablet:py-8 tablet:text-xl mx-auto block py-6 text-left opacity-50"
+      >
         Go Back
       </button>
       <form
+        className="defaultWidth desktop:grid-cols-[1.7fr_1fr] desktop:items-start mx-auto mb-20 grid gap-8"
         onSubmit={handleSubmit(async (data) => {
           const parsedData = { ...data };
 
@@ -54,108 +63,160 @@ export default function Checkout() {
           await clearCartFromAPI();
         })}
       >
-        <section className="mx-auto flex w-18/20 flex-col rounded-lg p-8 shadow-[0px_0px_40px_rgba(0,0,0,0.15)]">
-          <h3>CHECKOUT</h3>
-          <p className="text-orange subtitle pt-6 pb-4">BILLING DETAILS</p>
-          <FormField
-            register={register("name", { required: true })}
-            field="name"
-            text="Name"
-            placeholder="Insert your name"
-          />
-
-          <FormField
-            register={register(
-              "email",
-              { pattern: /^\S+@\S+$/i },
-              { required: true },
-            )}
-            field="email"
-            text="Email Address"
-            placeholder="Insert your email address"
-          />
-          <FormField
-            register={register("phone", {
-              required: true,
-              pattern: /^\d+$/,
-              minLength: 7,
-              maxLength: 15,
-            })}
-            field="phone"
-            text="Phone Number"
-            placeholder="Insert your phone number"
-          />
-          <p className="text-orange subtitle pt-6 pb-4">SHIPPING INFO</p>
-          <FormField
-            register={register("address", { required: true })}
-            field="address"
-            text="Your Address"
-            placeholder="Insert your address"
-          />
-          <FormField
-            register={register("zip", { required: true })}
-            field="zip"
-            text="ZIP Code"
-            placeholder="Insert your ZIP code"
-          />
-          <FormField
-            register={register("city", { required: true })}
-            field="city"
-            text="City"
-            placeholder="Insert your city"
-          />
-          <FormField
-            register={register("country", { required: true })}
-            field="country"
-            text="Country"
-            placeholder="Insert your country"
-          />
-          <p className="text-orange subtitle pt-6 pb-4">PAYMENT DETAILS</p>
-          <div className="mb-8 space-y-4">
-            <PaymentField
-              field="paymentMethod"
-              value="e-money"
-              register={register("paymentMethod", { required: true })}
-            >
-              e-Money
-            </PaymentField>
-            <PaymentField
-              field="paymentMethod"
-              value="cash-on-delivery"
-              register={register("paymentMethod", { required: true })}
-            >
-              Cash on Delivery
-            </PaymentField>
+        <section className="tablet:p-8 desktop:p-12 flex flex-col rounded-lg p-6 shadow-[0px_0px_40px_rgba(0,0,0,0.15)]">
+          <h1>CHECKOUT</h1>
+          <h2 className="tablet:text-xl! text-orange subtitle pt-6 pb-4">
+            BILLING DETAILS
+          </h2>
+          <div className="tablet:grid tablet:grid-cols-2 tablet:gap-4">
+            <div>
+              <FormField
+                register={register("name", { required: true })}
+                error={errors.name}
+                field="name"
+                text="Name"
+                placeholder="Insert your name"
+              />
+            </div>
+            <div>
+              <FormField
+                register={register("email", {
+                  required: true,
+                  pattern: /^\S+@\S+$/i,
+                })}
+                error={errors.email}
+                field="email"
+                text="Email Address"
+                placeholder="Insert your email address"
+              />
+            </div>
+            <div>
+              <FormField
+                register={register("phone", {
+                  required: true,
+                  pattern: /^\d+$/,
+                  minLength: 7,
+                  maxLength: 15,
+                })}
+                error={errors.phone}
+                field="phone"
+                text="Phone Number"
+                placeholder="Insert your phone number"
+              />
+            </div>
           </div>
-          <FormField
-            register={register("eMoneyNumber", {
-              validate: (value) => {
-                if (paymentMethod !== "e-money") return true;
-                return value?.trim().length > 0;
-              },
-            })}
-            field="eMoneyNumber"
-            text="e-Money Number"
-            placeholder="Insert your e-Money number"
-          />
-          <FormField
-            register={register("eMoneyPIN", {
-              validate: (value) => {
-                if (paymentMethod !== "e-money") return true;
-                return value?.trim().length > 0;
-              },
-            })}
-            field="eMoneyPIN"
-            text="e-Money PIN"
-            placeholder="Insert your e-Money PIN"
-          />
+
+          <h2 className="tablet:text-xl! text-orange subtitle pt-6 pb-4">
+            SHIPPING INFO
+          </h2>
+          <div>
+            <FormField
+              register={register("address", { required: true })}
+              error={errors.address}
+              field="address"
+              text="Your Address"
+              placeholder="Insert your address"
+            />
+          </div>
+          <div className="tablet:grid tablet:grid-cols-2 tablet:gap-4">
+            <div>
+              <FormField
+                register={register("zip", { required: true })}
+                error={errors.zip}
+                field="zip"
+                text="ZIP Code"
+                placeholder="Insert your ZIP code"
+              />
+            </div>
+            <div>
+              <FormField
+                register={register("city", { required: true })}
+                error={errors.city}
+                field="city"
+                text="City"
+                placeholder="Insert your city"
+              />
+            </div>
+            <div>
+              <FormField
+                register={register("country", { required: true })}
+                error={errors.country}
+                field="country"
+                text="Country"
+                placeholder="Insert your country"
+              />
+            </div>
+          </div>
+
+          <h2 className="tablet:text-xl! text-orange subtitle pt-6 pb-4">
+            PAYMENT DETAILS
+          </h2>
+          <div className="tablet:grid tablet:grid-cols-2 tablet:items-start tablet:gap-4 mb-8">
+            <h3 className="subtitle tablet:text-xl! font-bold">
+              Payment Method
+            </h3>
+            {errors.paymentMethod && (
+              <p className="tablet:text-sm text-xs font-bold text-red-500">
+                formato incorrecto
+              </p>
+            )}
+            <div className="space-y-4">
+              <PaymentField
+                field="paymentMethod"
+                value="e-money"
+                register={register("paymentMethod", { required: true })}
+              >
+                e-Money
+              </PaymentField>
+              <PaymentField
+                field="paymentMethod"
+                value="cash-on-delivery"
+                register={register("paymentMethod", { required: true })}
+              >
+                Cash on Delivery
+              </PaymentField>
+            </div>
+          </div>
+          <div className="tablet:grid tablet:grid-cols-2 tablet:gap-4">
+            <div>
+              <FormField
+                register={register("eMoneyNumber", {
+                  validate: (value) => {
+                    if (paymentMethod !== "e-money") return true;
+                    return value?.trim().length > 0;
+                  },
+                })}
+                error={errors.eMoneyNumber}
+                field="eMoneyNumber"
+                text="e-Money Number"
+                placeholder="Insert your e-Money number"
+              />
+            </div>
+            <div>
+              <FormField
+                register={register("eMoneyPIN", {
+                  validate: (value) => {
+                    if (paymentMethod !== "e-money") return true;
+                    return value?.trim().length > 0;
+                  },
+                })}
+                error={errors.eMoneyPIN}
+                field="eMoneyPIN"
+                text="e-Money PIN"
+                placeholder="Insert your e-Money PIN"
+              />
+            </div>
+          </div>
           {paymentMethod === "cash-on-delivery" && (
-            <div id="cash-on-delivery-info " className="mt-6 flex items-center gap-6 rounded-lg bg-gray px-6 py-6">
+            <div
+              id="cash-on-delivery-info "
+              className="bg-gray mt-6 flex items-center gap-6 rounded-lg px-6 py-6"
+            >
               <img
                 src="/assets/checkout/icon-cash-on-delivery.svg"
                 alt="Cash on Delivery"
               />
-              <p className="opacity-50">
+              <p className="tablet:text-lg! opacity-50">
                 The ‘Cash on Delivery’ option enables you to pay in cash when
                 our delivery courier arrives at your residence. Just make sure
                 your address is correct so that your order will not be
@@ -164,8 +225,8 @@ export default function Checkout() {
             </div>
           )}
         </section>
-        <section className="mx-auto mt-8 mb-20 flex w-18/20 flex-col rounded-lg p-8 shadow-[0px_0px_40px_rgba(0,0,0,0.15)]">
-          <h3>SUMMARY</h3>
+        <section className="tablet:p-8 desktop:sticky desktop:top-8 flex flex-col rounded-lg p-6 shadow-[0px_0px_40px_rgba(0,0,0,0.15)]">
+          <h2>SUMMARY</h2>
           <div className="mt-6 space-y-4">
             {cart?.products.map((product) => (
               <article
@@ -175,33 +236,33 @@ export default function Checkout() {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="h-16 w-16 rounded-lg object-cover"
+                  className="tablet:h-20 tablet:w-20 h-16 w-16 rounded-lg object-cover"
                 />
-                <div className="mr-auto ml-4">
+                <div className="tablet:text-lg mr-auto ml-4">
                   <p className="font-[manropeBold] uppercase">{product.name}</p>
                   <p className="opacity-50">${product.price}</p>
                 </div>
-                <p className="font-[manropeBold] opacity-50">
+                <p className="tablet:text-lg! font-[manropeBold] opacity-50">
                   x{product.quantity}
                 </p>
               </article>
             ))}
           </div>
-          <div className="mt-8 flex items-center justify-between">
+          <div className="tablet:text-xl! mt-8 flex items-center justify-between">
             <p className="opacity-50">TOTAL</p>
-            <p className="font-[manropeBold]">${totalBuy}</p>
+            <p className="font-[manropeBold]">${totalBuy.toLocaleString("EN-en")}</p>
           </div>
-          <div className="mt-2 flex items-center justify-between">
+          <div className="tablet:text-xl! mt-2 flex items-center justify-between">
             <p className="opacity-50">SHIPPING</p>
-            <p className="font-[manropeBold]">${shippingCost}</p>
+            <p className="font-[manropeBold]">${shippingCost.toLocaleString("EN-en")}</p>
           </div>
-          <div className="mt-2 flex items-center justify-between">
+          <div className="tablet:text-xl! mt-2 flex items-center justify-between">
             <p className="opacity-50">VAT (INCLUDED)</p>
-            <p className="font-[manropeBold]">${vat}</p>
+            <p className="font-[manropeBold]">${vat.toLocaleString("EN-en")}</p>
           </div>
-          <div className="mt-6 flex items-center justify-between">
+          <div className="tablet:text-xl! mt-6 flex items-center justify-between">
             <p className="opacity-50">GRAND TOTAL</p>
-            <p className="text-orange font-[manropeBold]">${grandTotal}</p>
+            <p className="text-orange font-[manropeBold]">${grandTotal.toLocaleString("EN-en")}</p>
           </div>
           {cart?.products.length > 0 ? (
             <button
