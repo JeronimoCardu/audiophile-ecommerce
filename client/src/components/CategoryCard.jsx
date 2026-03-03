@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import BtnTertiary from "./buttons/BtnTertiary";
+import BtnTertiary from "./Buttons/BtnTertiary";
 
 export default function CategoryCard({ category }) {
   return (
