@@ -23,10 +23,14 @@ export async function addToCart(productId, quantity, image, name, price) {
       credentials: "include",
       body: JSON.stringify({ productId, quantity, image, name, price }),
     });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data?.message || `HTTP error! status: ${response.status}`,
+      );
+    }
+
     return data.data;
   } catch (error) {
     console.error("Error adding to cart:", error);

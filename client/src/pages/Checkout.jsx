@@ -25,7 +25,7 @@ export default function Checkout() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [grandTotalOrder, setGrandTotalOrder] = useState(0);
 
-  const totalBuy = cart?.products.reduce(
+  const totalBuy = cart?.products?.reduce(
     (total, product) => total + product.price * product.quantity,
     0,
   );
@@ -162,14 +162,14 @@ export default function Checkout() {
             )}
             <div className="space-y-4">
               <PaymentField
-                field="paymentMethod"
+                field="eMoneyMethod"
                 value="e-money"
                 register={register("paymentMethod", { required: true })}
               >
                 e-Money
               </PaymentField>
               <PaymentField
-                field="paymentMethod"
+                field="deliveryMethod"
                 value="cash-on-delivery"
                 register={register("paymentMethod", { required: true })}
               >
@@ -250,19 +250,27 @@ export default function Checkout() {
           </div>
           <div className="tablet:text-xl! mt-8 flex items-center justify-between">
             <p className="opacity-50">TOTAL</p>
-            <p className="font-[manropeBold]">${totalBuy.toLocaleString("EN-en")}</p>
+            <p className="font-[manropeBold]">
+              ${(totalBuy ?? 0).toLocaleString("en-US")}
+            </p>
           </div>
           <div className="tablet:text-xl! mt-2 flex items-center justify-between">
             <p className="opacity-50">SHIPPING</p>
-            <p className="font-[manropeBold]">${shippingCost.toLocaleString("EN-en")}</p>
+            <p className="font-[manropeBold]">
+              ${(shippingCost ?? 0).toLocaleString("en-US")}
+            </p>
           </div>
           <div className="tablet:text-xl! mt-2 flex items-center justify-between">
             <p className="opacity-50">VAT (INCLUDED)</p>
-            <p className="font-[manropeBold]">${vat.toLocaleString("EN-en")}</p>
+            <p className="font-[manropeBold]">
+              ${(vat ?? 0).toLocaleString("en-US")}
+            </p>
           </div>
           <div className="tablet:text-xl! mt-6 flex items-center justify-between">
             <p className="opacity-50">GRAND TOTAL</p>
-            <p className="text-orange font-[manropeBold]">${grandTotal.toLocaleString("EN-en")}</p>
+            <p className="text-orange font-[manropeBold]">
+              ${(grandTotal ?? 0).toLocaleString("en-US")}
+            </p>
           </div>
           {cart?.products.length > 0 ? (
             <button

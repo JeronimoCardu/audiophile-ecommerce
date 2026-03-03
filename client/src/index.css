@@ -154,3 +154,51 @@ body {
     max-width: none;
   }
 }
+
+.app-toast-container {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 100vw;
+  padding: 0;
+  margin: 0;
+}
+
+.app-toast {
+  border: 1px solid var(--color-orange);
+  border-radius: 0;
+  background: var(--color-bgBlackFooter);
+  box-shadow: 0px 10px 42px rgba(0, 0, 0, 0.35);
+  min-height: auto;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+}
+
+.app-toast-body {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  font-family: manropeMedium;
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+}
+
+@media (min-width: 768px) {
+  .app-toast-container {
+    width: 100%;
+    max-width: 25rem;
+    right: 1.5rem;
+    left: auto;
+    top: 1.5rem;
+  }
+
+  .app-toast {
+    border-radius: 0.75rem;
+  }
+
+  .app-toast-body {
+    font-size: 1rem;
+    padding: 1rem 1.15rem;
+  }
+}

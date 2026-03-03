@@ -83,7 +83,7 @@ export default function Header({ menuOpen, setOpenMenu }) {
               alt="cart"
             />
             <div
-              className={`${cartPopupOpen ? "hidden" : "block"} ${cart?.products?.length > 0 ? "block" : "hidden"} bg-orange absolute right-0 bottom-0 tablet:h-4 tablet:w-4 w-3 h-3 rounded-full`}
+              className={`${cartPopupOpen ? "hidden" : "block"} ${cart?.products?.length > 0 ? "block" : "hidden"} bg-orange-500 absolute right-0 bottom-0 tablet:h-4 tablet:w-4 w-3 h-3 rounded-full`}
             ></div>
           </button>
         </div>

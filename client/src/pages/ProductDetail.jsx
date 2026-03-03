@@ -1,6 +1,7 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { productContext } from "../contexts/productContext.js";
+import { toast } from "react-toastify";
 
 import QuantityField from "../components/Inputs/QuantityField.jsx";
 import RelatedProducts from "../components/RelatedProducts.jsx";
@@ -15,13 +16,25 @@ export default function ProductDetail() {
   const [productData, setProductData] = useState(null);
 
   async function handleAddToCart() {
-    await addToCartToAPI(
-      productData._id,
-      Number(document.getElementById(`quantity-${productData._id}`).value),
-      productData.image.mobile,
-      productData.name,
-      productData.price,
+    const quantity = Number(
+      document.getElementById(`quantity-${productData._id}`).value,
     );
+
+    try {
+      await addToCartToAPI(
+        productData._id,
+        quantity,
+        productData.image.mobile,
+        productData.name,
+        productData.price,
+      );
+
+      toast.success(`${quantity} x ${productData.name} agregado al carrito`);
+    } catch (error) {
+      toast.error(
+        "No se pudo agregar el producto al carrito: " + error.message,
+      );
+    }
   }
 
   useEffect(() => {
@@ -35,7 +48,7 @@ export default function ProductDetail() {
   return (
     <>
       <section className="defaultWidth mx-auto">
-        <article className="tablet:my-10 tablet:grid tablet:grid-cols-2 tablet:items-center tablet:gap-12 tablet:space-y-0 desktop:gap-24 my-6 space-y-6">
+        <article className="tablet:my-10 tablet:grid tablet:grid-cols-2 tablet:items-center tablet:gap-12 tablet:space-y-0 desktop:gap-x-24 my-6 space-y-6">
           <BackButton />
           <picture>
             <source
