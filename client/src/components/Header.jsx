@@ -6,7 +6,7 @@ import CartPopup from "./CartPopup";
 
 export default function Header({ menuOpen, setOpenMenu }) {
   const location = useLocation().pathname;
-  const { toggleCartPopup, cartPopupOpen } = useContext(productContext);
+  const { toggleCartPopup, cartPopupOpen, cart } = useContext(productContext);
 
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -75,13 +75,16 @@ export default function Header({ menuOpen, setOpenMenu }) {
           <button
             ref={cartButtonRef}
             onClick={toggleCartPopup}
-            className="cursor-pointer"
+            className="tablet:w-10 tablet:h-10 w-8 h-8 relative flex cursor-pointer items-center justify-center"
           >
             <img
               src="/assets/shared/desktop/icon-cart.svg"
               className="tablet:scale-150"
               alt="cart"
             />
+            <div
+              className={`${cartPopupOpen ? "hidden" : "block"} ${cart?.products?.length > 0 ? "block" : "hidden"} bg-orange absolute right-0 bottom-0 tablet:h-4 tablet:w-4 w-3 h-3 rounded-full`}
+            ></div>
           </button>
         </div>
       </header>
