@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://audiophile-ecommerce-six-rho.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],

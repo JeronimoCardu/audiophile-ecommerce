@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 exports.getOrders = async (req, res) => {
   try {
-    const user = req.cookies.user;
+    const user = req.signedCookies.user;
     if (!user) {
       return res.status(401).json({ message: "Unauthorized" });
     }

@@ -3,7 +3,7 @@ const Product = require("../models/Product.js");
 
 exports.getCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.cookies.user });
+    const cart = await Cart.findOne({ user: req.signedCookies.user });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -23,9 +23,9 @@ exports.addToCart = async (req, res) => {
 
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    let cart = await Cart.findOne({ user: req.cookies.user });
+    let cart = await Cart.findOne({ user: req.signedCookies.user });
 
-    if (!cart) cart = new Cart({ user: req.cookies.user, products: [] });
+    if (!cart) cart = new Cart({ user: req.signedCookies.user, products: [] });
 
     const index = cart.products.findIndex(
       (item) => item.productId.toString() === productId,
@@ -55,7 +55,7 @@ exports.updateCartItem = async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body;
 
-    const cart = await Cart.findOne({ user: req.cookies.user });
+    const cart = await Cart.findOne({ user: req.signedCookies.user });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -76,7 +76,7 @@ exports.updateCartItem = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
   try {
     const { productId } = req.body;
-    const cart = await Cart.findOne({ user: req.cookies.user });
+    const cart = await Cart.findOne({ user: req.signedCookies.user });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -96,7 +96,7 @@ exports.removeFromCart = async (req, res) => {
 
 exports.clearCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.cookies.user });
+    const cart = await Cart.findOne({ user: req.signedCookies.user });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }

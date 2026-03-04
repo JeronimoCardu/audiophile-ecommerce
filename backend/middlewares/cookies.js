@@ -1,14 +1,14 @@
 const crypto = require("crypto");
 
 function cookieMiddleware(req, res, next) {
-  if (!req.cookies || !req.cookies.user) {
+  if (!req.signedCookies.user || !req.signedCookies.user) {
     const userId = crypto.randomUUID();
 
     res.cookie("user", userId, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24,
+      signed: true,
+      sameSite: "none",
+      secure: true,
     });
   }
   next();
