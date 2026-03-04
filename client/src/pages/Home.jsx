@@ -26,7 +26,7 @@ export default function Home() {
           <img
             src="/assets/home/mobile/image-header.jpg"
             alt="hero-image"
-            className="desktop:z-0 absolute inset-0 -top-28 z-10 h-full w-full object-contain object-center"
+            className="desktop:z-0 absolute inset-0 -top-28 z-10 h-full w-full object-contain object-center min-[1780px]:pr-40 desktop:object-right"
           />
         </picture>
 
