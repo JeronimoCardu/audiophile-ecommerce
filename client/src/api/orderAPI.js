@@ -1,8 +1,7 @@
-const API_URL = import.meta.env.VITE_API_URL;
 
 export async function createOrderToAPI(orderData) {
   try {
-    const response = await fetch(`${API_URL}/api/orders`, {
+    const response = await fetch(`/api/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

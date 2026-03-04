@@ -1,8 +1,7 @@
-const API_URL = import.meta.env.VITE_API_URL;
 
 export async function getAllProducts() {
   try {
-    const response = await fetch(`${API_URL}/api/products`, {
+    const response = await fetch(`/api/products`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -20,7 +19,7 @@ export async function getAllProducts() {
 
 export async function getProductById(productId) {
   try {
-    const response = await fetch(`${API_URL}/api/products/${productId}`, {
+    const response = await fetch(`/api/products/${productId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
